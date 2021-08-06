@@ -1,0 +1,65 @@
+Conectado ao host: 127.0.0.1 Port: 65432
+Enviou p:  189
+Server recebeu mensagem.
+Enviou g:  192
+Server recebeu mensagem.
+Enviou A:  108
+Server recebeu mensagem.
+Recebeu mensagem do server B:  135
+Chave secreta: b'135     '
+Chave estabelecida, digite uma mensagem:
+Enviou mensagem criptografada:  b'\xacQ\x88f\xaab1\xce\xe9\x92\xcd\xda\xb9M\x81k'
+Server recebeu mensagem.
+Recebeu mensagem do server:  b'\xacQ\x88f\xaab1\xce\xe9\x92\xcd\xda\xb9M\x81k'
+Mensagem descriptografada:  b'Hello World     ' 
+
+
+
+Enviou p:  29
+Server recebeu mensagem.
+Enviou g:  132
+Server recebeu mensagem.
+Enviou A:  20
+Server recebeu mensagem.
+Recebeu mensagem do server B:  1
+Chave secreta: b'1       '
+Chave estabelecida, digite uma mensagem:
+Enviou mensagem criptografada:  b'\xca\xa3\xd98\xc5\x1ec\x15\xcf\xe5#P\xb1\x84`\xa9'
+Server recebeu mensagem.
+Recebeu mensagem do server:  b'\xca\xa3\xd98\xc5\x1ec\x15\xcf\xe5#P\xb1\x84`\xa9'
+Mensagem descriptografada:  b'Mensagem 2      ' 
+
+
+
+Enviou p:  9
+Server recebeu mensagem.
+Enviou g:  84
+Server recebeu mensagem.
+Enviou A:  0
+Server recebeu mensagem.
+Recebeu mensagem do server B:  0
+Chave secreta: b'0       '
+Chave estabelecida, digite uma mensagem:
+Enviou mensagem criptografada:  b';\x85\x0eW\nB\x06\xb1\xdaJ\xc8p\x1fu\x04\x96g\x8c\x1fP\xbc*\xfc?\x80\xcdnOs\xa2\xc4\xc5U\x81\x83AS\x07\xb9\x95\x1e\xc1\xb3.n\xb8|Y\xd9l\xcd\xfb\x9bCa<*=\xf9(\x84|l]\xf2\x11\xe3\t\xb7$)\xaci\x1c\x85\xb9\xda\xebO\xa0J\xdctG\x9b\xafb1v\x82#\xfb\xe6\xf3\xbf\xa3\x97\xa6=\x8b\x10\xda~\xf7\xd9\xe2\x05}q\xc4\xa3\x05'
+Server recebeu mensagem.
+Recebeu mensagem do server:  b';\x85\x0eW\nB\x06\xb1\xdaJ\xc8p\x1fu\x04\x96g\x8c\x1fP\xbc*\xfc?\x80\xcdnOs\xa2\xc4\xc5U\x81\x83AS\x07\xb9\x95\x1e\xc1\xb3.n\xb8|Y\xd9l\xcd\xfb\x9bCa<*=\xf9(\x84|l]\xf2\x11\xe3\t\xb7$)\xaci\x1c\x85\xb9\xda\xebO\xa0J\xdctG\x9b\xafb1v\x82#\xfb\xe6\xf3\xbf\xa3\x97\xa6=\x8b\x10\xda~\xf7\xd9\xe2\x05}q\xc4\xa3\x05'
+Mensagem descriptografada:  b'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et ligula ac sapien egestas ullamcorper.     ' 
+
+
+
+Enviou p:  32
+Server recebeu mensagem.
+Enviou g:  97
+Server recebeu mensagem.
+Enviou A:  1
+Server recebeu mensagem.
+Recebeu mensagem do server B:  1
+Chave secreta: b'escarola'
+Chave estabelecida, digite uma mensagem:
+Enviou mensagem criptografada:  b's\xd9.\xe3\xcf\x8c\xa5\x80\xb4\\\xa5!k\xf4?\x89'
+Server recebeu mensagem.
+Recebeu mensagem do server:  b's\xd9.\xe3\xcf\x8c\xa5\x80\xb4\\\xa5!k\xf4?\x89'
+Mensagem descriptografada:  b'Mensagem errada ' 
+
+
+

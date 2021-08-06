@@ -89,7 +89,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 # Calcula chave secreta
                 segredo = calculaChave(pg, b)
                 stringSegredo = pad(bytes(str(segredo), 'utf-8'))
-
+                print("Chave secreta:", stringSegredo)
                 # Inicializa biblioteca de criptografia com a chave secreta
                 des = DES.new(stringSegredo, DES.MODE_ECB)
 

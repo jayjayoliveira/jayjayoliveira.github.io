@@ -73,13 +73,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
         # Calcula chave secreta
         segredo = calculaChave(pg, a)
-
+        
         # Para a quarta execução atribuímos uma chave de criptografia errada.
         if(x != 3):
             stringSegredo = ajustaString(bytes(str(segredo), 'utf-8'))
         else:
             stringSegredo = b'escarola'
 
+        print("Chave secreta:", stringSegredo)
 
         # Inicializa biblioteca de criptografia com a chave secreta
         des = DES.new(stringSegredo, DES.MODE_ECB)

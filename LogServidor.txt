@@ -1,0 +1,41 @@
+Conectado ao cliente: 127.0.0.1 Port: 52702
+Recebeu p: 189
+Recebeu g: 192
+Recebeu A: 108
+Enviou B: 135
+Chave secreta: b'135     '
+Recebeu mensagem do criptografada cliente: b'\xacQ\x88f\xaab1\xce\xe9\x92\xcd\xda\xb9M\x81k'
+Mensagem descriptografada: b'Hello World     ' 
+
+
+
+Recebeu p: 29
+Recebeu g: 132
+Recebeu A: 20
+Enviou B: 1
+Chave secreta: b'1       '
+Recebeu mensagem do criptografada cliente: b'\xca\xa3\xd98\xc5\x1ec\x15\xcf\xe5#P\xb1\x84`\xa9'
+Mensagem descriptografada: b'Mensagem 2      ' 
+
+
+
+Recebeu p: 9
+Recebeu g: 84
+Recebeu A: 0
+Enviou B: 0
+Chave secreta: b'0       '
+Recebeu mensagem do criptografada cliente: b';\x85\x0eW\nB\x06\xb1\xdaJ\xc8p\x1fu\x04\x96g\x8c\x1fP\xbc*\xfc?\x80\xcdnOs\xa2\xc4\xc5U\x81\x83AS\x07\xb9\x95\x1e\xc1\xb3.n\xb8|Y\xd9l\xcd\xfb\x9bCa<*=\xf9(\x84|l]\xf2\x11\xe3\t\xb7$)\xaci\x1c\x85\xb9\xda\xebO\xa0J\xdctG\x9b\xafb1v\x82#\xfb\xe6\xf3\xbf\xa3\x97\xa6=\x8b\x10\xda~\xf7\xd9\xe2\x05}q\xc4\xa3\x05'
+Mensagem descriptografada: b'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et ligula ac sapien egestas ullamcorper.     ' 
+
+
+
+Recebeu p: 32
+Recebeu g: 97
+Recebeu A: 1
+Enviou B: 1
+Chave secreta: b'1       '
+Recebeu mensagem do criptografada cliente: b's\xd9.\xe3\xcf\x8c\xa5\x80\xb4\\\xa5!k\xf4?\x89'
+Mensagem descriptografada: b'\x0e\rL\xc5v&\x8f\xad\x90\xa7f\xac;1\xb8\xc1' 
+
+
+
