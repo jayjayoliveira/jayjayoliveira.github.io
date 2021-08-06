@@ -1,0 +1,103 @@
+""" --------------------------------------------------------------------------------------
+   Programa que implementa uma conexão servidor-cliente utilizando o Protocolo TCP/IP
+   Realiza a troca de chaves Diffie-Hellman e troca mensagens utilizando criptografia DES.
+
+   Objetivo: ilustrar como é garantida a segurança da conversa de duas máquinas na internet.
+
+   Restrições: 1. O programa servidor deve ser executado antes do cliente.
+               2. Antes de executar o programa a biblioteca "pycrypto" deve ser instalada utilizando o comando "pip install pycrypto"
+
+   Autores: João Pedro de Matos de Oliveira (GRR 2017 1599) e Matheus Buratti Zagonel (GRR 2017 1594)
+   Disciplina: Redes II
+   Data da ultima atualizacao: 06/08/2021
+---------------------------------------------------------------------------------------- """
+
+import socket
+from Crypto.Cipher import DES
+import random
+
+
+# Completa uma string para que seu tamanho seja multiplo de 8
+def ajustaString(text):
+    # Encontra quanto falta para string ficar em multiplo de 8
+    n = len(text) % 8
+    # Retorna string com espaços extras necessários
+    return text + (b' ' * (8-n))
+
+# Calculo usado para troca de chave de Diffie-Hellman
+def calculaChave(pg, expoente):
+    return pow(pg[1], expoente) % pg[0]
+
+
+HOST = '127.0.0.1'  # The server's hostname or IP address
+PORT = 65432        # The port used by the server
+
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    #Conecta ao servidor
+    s.connect((HOST, PORT))
+    print("Conectado ao host:", HOST, "Port:", PORT)
+
+    #Manda 4 mensagens com chaves diferentes para o servidor
+    for x in range(0, 4):
+        # Cria chaves p, g
+        pg = [random.randint(1, 255), random.randint(1, 255)]
+
+        # Cria chave a
+        a = random.randint(1, 1000)
+
+        # Calcula chave A
+        A = calculaChave(pg, a)
+
+        # Envia p
+        s.sendall(bytes([pg[0]]))
+        print('Enviou p: ', pg[0])
+        data = s.recv(1024)
+        print('Server recebeu mensagem.')
+
+        # Envia g
+        s.sendall(bytes([pg[1]]))
+        print('Enviou g: ', pg[1])
+        data = s.recv(1024)
+        print('Server recebeu mensagem.')
+
+        # Envia A
+        s.sendall(bytes([A]))
+        print('Enviou A: ', A)
+        data = s.recv(1024)
+        print('Server recebeu mensagem.')
+        print('Recebeu mensagem do server B: ',
+              repr(int.from_bytes(data, "big")))
+
+        pg[1] = int.from_bytes(data, "big")
+
+        # Calcula chave secreta
+        segredo = calculaChave(pg, a)
+
+        # Para a quarta execução atribuímos uma chave de criptografia errada.
+        if(x != 3):
+            stringSegredo = ajustaString(bytes(str(segredo), 'utf-8'))
+        else:
+            stringSegredo = b'escarola'
+
+
+        # Inicializa biblioteca de criptografia com a chave secreta
+        des = DES.new(stringSegredo, DES.MODE_ECB)
+
+        # Recebe uma mensagem do usuário
+        mensagem = input("Chave estabelecida, digite uma mensagem:\n")
+
+        string_ajustada = ajustaString(bytes(mensagem, 'utf-8'))
+        # Criptografa a mensagem
+        mensagem_criptografada = des.encrypt(string_ajustada)
+
+        # Envia mensagem criptografada
+        s.sendall(bytes(mensagem_criptografada))
+        print('Enviou mensagem criptografada: ', mensagem_criptografada)
+
+        # Recebe a mesma mensagem criptografada enviada
+        # Descriptografa e imprime para termos uma visualização de que a mensagem foi enviada/recebida corretamente
+        data = s.recv(1024)
+        print('Server recebeu mensagem.')
+        print('Recebeu mensagem do server: ', data)
+        print('Mensagem descriptografada: ', des.decrypt(data), '\n\n\n')

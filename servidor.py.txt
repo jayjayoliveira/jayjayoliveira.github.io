@@ -1,0 +1,112 @@
+""" --------------------------------------------------------------------------------------
+   Programa que implementa uma conexão servidor-cliente utilizando o Protocolo TCP/IP
+   Realiza a troca de chaves Diffie-Hellman e troca mensagens utilizando criptografia DES.
+
+   Objetivo: ilustrar como é garantida a segurança da conversa de duas máquinas na internet.
+
+   Restrições: 1. O programa servidor deve ser executado antes do cliente.
+               2. Antes de executar o programa a biblioteca "pycrypto" deve ser instalada utilizando o comando "pip install pycrypto"
+
+   Autores: João Pedro de Matos de Oliveira (GRR 2017 1599) e Matheus Buratti Zagonel (GRR 2017 1594)
+   Disciplina: Redes II
+   Data da ultima atualizacao: 06/08/2021
+---------------------------------------------------------------------------------------- """
+
+import socket
+from Crypto.Cipher import DES
+import random
+
+
+# Completa uma string para que seu tamanho seja multiplo de 8
+def pad(text):
+    #Encontra quanto falta para string ficar em multiplo de 8
+    n = len(text) % 8
+    #Retorna string com espaços extras necessários
+    return text + (b' ' * (8-n))
+
+# Calculo usado para troca de chave de Diffie-Hellman
+def calculaChave(pg, expoente):
+    return pow(pg[1],expoente)%pg[0]
+
+
+#Inicializa Endereços
+HOST = '127.0.0.1'  # localhost
+PORT = 65432        # Port para escutar mensagens
+
+# Inicializa chaves p e g (Serão posteriormente recebidas do cliente)
+pg = [0,0]
+# Cria chave b
+b = random.randint(1, 1000)
+
+# Contador para identificar a mensagem recebida
+count = 0
+
+#Cria socket
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    #Vincula socket ao endereço
+    s.bind((HOST, PORT))
+
+    # Habilita o servidor para aceitar conexões
+    s.listen()
+
+    # Espera por uma conexão, quando houver, atribui as variaveis conexao e endr
+    conexao, endr = s.accept()
+    with conexao:
+        print("Conectado ao cliente:", endr[0], "Port:", endr[1])
+
+        # Recebe mensagens até o cliente fechar a conexão
+        while True:
+            #Recebe mensagem do cliente
+            data = conexao.recv(1024)
+
+            # Se chegou ao fim das mensagens sai do loop
+            if(not data):
+                break
+
+            # Recebe chave p
+            if(count == 0):
+                print('Recebeu p:', int.from_bytes(data, "big"))
+                pg[0] = int.from_bytes(data, "big")
+                count += 1
+                conexao.sendall(data)
+            # Recebe chave g
+            elif (count == 1):
+                print('Recebeu g:', int.from_bytes(data, "big"))
+                pg[1] = int.from_bytes(data, "big")
+                count += 1
+                conexao.sendall(data)
+            # Recebe A, envia B e calcula chave secreta
+            elif (count == 2):
+                print('Recebeu A:', int.from_bytes(data, "big"))
+                # Calcula chave B
+                B = calculaChave(pg, b)                
+                count += 1
+                # Envia chave B
+                conexao.sendall(bytes([B]))
+                print('Enviou B:', B)
+
+                pg[1] = int.from_bytes(data, "big")
+                # Calcula chave secreta
+                segredo = calculaChave(pg, b)
+                stringSegredo = pad(bytes(str(segredo), 'utf-8'))
+
+                # Inicializa biblioteca de criptografia com a chave secreta
+                des = DES.new(stringSegredo, DES.MODE_ECB)
+
+            # Recebe mensagem criptografada
+            else:
+                print('Recebeu mensagem do criptografada cliente:', data)
+                # Descriptografa mensagem
+                data = des.decrypt(data)
+                # Imprime mensagem descriptografada
+                print('Mensagem descriptografada:', data, "\n\n\n")
+
+                # Reencripta a mensagem
+                data = des.encrypt(data)
+                conexao.sendall(data)
+
+                # Reinicia contador para receber mais um grupo de mensagens
+                count = 0
+                
+            
+        
